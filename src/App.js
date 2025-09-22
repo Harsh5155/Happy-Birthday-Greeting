@@ -5,11 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Float } from "@react-three/drei";
-
-// Correctly import the named export 'Model' and rename it to 'CakeModel'
 import { Model as CakeModel } from './CakeModel';
 
-// --- MAIN APP COMPONENT ---
 export default function App({ name, message, imageUrl }) {
   const [step, setStep] = useState(1);
   const nextStep = () => setStep((prev) => prev + 1);
@@ -32,20 +29,19 @@ export default function App({ name, message, imageUrl }) {
   );
 }
 
-// --- PROPS & STEP COMPONENTS ---
-
-App.defaultProps = {
-  name: "Anjali",
-  message: "Happy Birthday Anjali !!! You're an amazing person, and I'm so lucky to know you. Wishing you a day filled with joy, laughter, and everything you wished for. Cheers to another fantastic year! 💖 Many more birthdays to celebrate together Stay Blessed Our childhood friendship have grown into a Treasure HAPPY 20 th ",
-  imageUrl: "/birthday_img1.jpg",
-};
-
+// --- BUTTON COMPONENT ---
 const AnimatedButton = ({ children, onClick, className = "" }) => (
-  <motion.button onClick={onClick} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} className={`mt-10 px-8 py-4 bg-yellow-400 text-purple-900 font-bold rounded-2xl shadow-xl transition-transform duration-200 z-50 ${className}`}>
+  <motion.button
+    onClick={onClick}
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.95 }}
+    className={`mt-10 px-8 py-4 bg-yellow-400 text-purple-900 font-bold rounded-2xl shadow-xl transition-transform duration-200 z-50 ${className}`}
+  >
     {children}
   </motion.button>
 );
 
+// --- INTRO ---
 const Intro = ({ onNext }) => (
   <motion.div key="intro" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.7 }} className="text-center">
     <Confetti numberOfPieces={120} recycle={true} />
@@ -56,6 +52,7 @@ const Intro = ({ onNext }) => (
   </motion.div>
 );
 
+// --- COUNTDOWN ---
 const Countdown = ({ onNext }) => {
   const [count, setCount] = useState(3);
   useEffect(() => {
@@ -75,6 +72,7 @@ const Countdown = ({ onNext }) => {
   );
 };
 
+// --- 3D CAKE SCENE ---
 const CakeScene3D = ({ name, onNext }) => (
   <motion.div key="cake" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.5 }} className="w-full h-full flex flex-col items-center justify-center relative">
     <Confetti numberOfPieces={400} recycle={false} />
@@ -85,7 +83,6 @@ const CakeScene3D = ({ name, onNext }) => (
           <directionalLight position={[10, 10, 5]} intensity={2} />
           <directionalLight position={[-10, -10, -5]} intensity={1} />
           <Float speed={1.5} rotationIntensity={0.2} floatIntensity={1.2}>
-            {/* Adjust scale and position for the new model */}
             <CakeModel scale={350} position={[0, -1.5, 0]} />
           </Float>
           <Environment preset="sunset" />
@@ -100,7 +97,7 @@ const CakeScene3D = ({ name, onNext }) => (
   </motion.div>
 );
 
-
+// --- MESSAGE CARD ---
 const MessageCard = ({ name, message, onNext }) => (
   <motion.div key="message" initial={{ y: 200, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -200, opacity: 0 }} transition={{ duration: 0.8 }} className="bg-white text-gray-800 p-8 rounded-2xl shadow-2xl max-w-md z-50 text-center">
     <h1 className="text-3xl font-bold mb-4 text-purple-700">💌 A Message For You</h1>
@@ -109,6 +106,7 @@ const MessageCard = ({ name, message, onNext }) => (
   </motion.div>
 );
 
+// --- FINAL SURPRISE ---
 const FinalSurprise = ({ imageUrl }) => {
   const [isOpened, setIsOpened] = useState(false);
   return (
@@ -118,7 +116,7 @@ const FinalSurprise = ({ imageUrl }) => {
           <motion.div key="giftbox" onClick={() => setIsOpened(true)} whileHover={{ scale: 1.1, rotate: 5 }} exit={{ scale: 3, opacity: 0, transition: { duration: 0.5 } }} className="w-48 h-48 bg-red-400 rounded-3xl shadow-2xl flex items-center justify-center text-8xl cursor-pointer">🎁</motion.div>
         ) : (
           <motion.div key="finalImage" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 120, duration: 0.8 }} className="text-center">
-            <img src="/birthday_img1.jpg" alt="Surprise" className="rounded-2xl shadow-lg w-80 md:w-96" />
+            <img src={imageUrl} alt="Surprise" className="rounded-2xl shadow-lg w-80 md:w-96" />
             <p className="mt-6 text-2xl font-semibold">Hope you have the best day ever! 🎉</p>
           </motion.div>
         )}
@@ -127,3 +125,4 @@ const FinalSurprise = ({ imageUrl }) => {
     </motion.div>
   );
 };
+
