@@ -35,7 +35,7 @@ export default function App({ name, message, imageUrl }) {
 // --- PROPS & STEP COMPONENTS ---
 
 App.defaultProps = {
-  name: "Alex",
+  name: "Anjali",
   message: "You're an amazing person, and I'm so lucky to know you. Wishing you a day filled with joy, laughter, and everything you wished for. Cheers to another fantastic year! 💖",
   imageUrl: "/birthday_img1.jpg",
 };
